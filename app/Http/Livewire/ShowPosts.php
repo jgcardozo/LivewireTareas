@@ -10,6 +10,8 @@ class ShowPosts extends Component
     public $search;
     public $sort = 'id';
     public $direction = 'desc';
+    protected $listeners = ['render'];
+
 
     public function render()
     {
@@ -37,8 +39,6 @@ class ShowPosts extends Component
             $this->sort = $sort;
             $this->direction = 'asc';
         }
-
-
 
     }//sort
 

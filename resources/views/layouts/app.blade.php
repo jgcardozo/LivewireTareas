@@ -8,6 +8,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -44,5 +45,17 @@
         @stack('modals')
 
         @livewireScripts
+
+
+        <script>
+            Livewire.on('alert', function(mensaje){
+                Swal.fire(
+                'Bien hecho!',
+                 mensaje,
+                'success'
+                )
+            })
+        </script>
+
     </body>
 </html>
