@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Schema;
+
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +17,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         \App\Models\Post::factory(100)->create();
+        Storage::deleteDirectory('posts');
+        Storage::makeDirectory('posts');
+        \App\Models\Post::factory(100)->create();
     }
 }
