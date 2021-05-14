@@ -136,13 +136,13 @@
 
             <div class="mb-4">
                 <X-label value="Titulo del post" />
-                <x-jet-input type="text" class="w-full" wire:model="title" />
+                <x-jet-input type="text" class="w-full" wire:model.defer="title" />
             </div>
 
 
             <div class="mb-4">
                 <X-label value="Contenido" />
-                <textarea rows="6" class="form-control w-full" wire:model="content"></textarea>
+                <textarea rows="6" class="form-control w-full" wire:model.defer="content"></textarea>
 
             </div>
 
@@ -157,9 +157,9 @@
 
         <x-slot name="footer">
             <x-jet-secondary-button wire:click="$set('open',false)">Cancelar</x-jet-secondary-button>
-            <x-jet-danger-button wire:click="save" wire:target="save, photo" wire:loading.attr="disabled"
+            <x-jet-danger-button wire:click="{{$view}}" wire:target="{{$view}}, photo" wire:loading.attr="disabled"
                 class="disabled:opacity-25">
-                <i class="fas fa-plus-circle mr-2"></i>view
+                <i class="fas fa-plus-circle mr-2"></i>{{$view}}
             </x-jet-danger-button>
             <span wire:loading wire:target="save">
                 Procesando...

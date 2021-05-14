@@ -4,11 +4,16 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use \App\Models\Post;
+use Illuminate\Support\Facades\Schema;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
+
 
 class ShowPosts extends Component
 {
     use WithFileUploads;
+
+    
 
     public $search;
     public $sort = 'id';
@@ -18,6 +23,8 @@ class ShowPosts extends Component
     public $open = false;
     public $title, $content, $photo, $resetFoto;
     public $post;
+    //
+    public $view = "create";
 
 
     protected $rules = [
@@ -67,13 +74,34 @@ class ShowPosts extends Component
     public function edit(Post $post)
     {
         //dd($post);
+        $this->view = "update";
         $this->post = $post;
         $this->open = true;
         $this->title = $post->title;
         $this->content = $post->content; 
         
         
-    }
+    }//edit
+
+
+    public function update()
+    {
+
+        $this->validate();
+
+        $this->post->title   = $this->title;
+        $this->post->content = $this->content;
+    
+        if($this->photo){
+            Storage::delete([$this->post->photo]);
+            $this->post->imagen = $this->photo->store('posts');
+        }
+        $this->post->save();
+
+        $this->resetFoto = rand();
+        $this->reset(['title','content','open', 'photo']);
+        $this->emit('alert', 'El post se actualizo correctamente');
+    }//update
 
 
 
