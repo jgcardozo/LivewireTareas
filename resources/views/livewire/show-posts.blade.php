@@ -70,20 +70,26 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach ($posts as $post)
+                        @foreach ($posts as $itemPost)
                             <tr>
                                 <td class="px-6 py-4 ">
-                                    <div class="text-sm text-gray-900">{{ $post->id }}</div>
+                                    <div class="text-sm text-gray-900">{{ $itemPost->id }}</div>
 
                                 </td>
                                 <td class="px-6 py-4 ">
-                                    <div class="text-sm text-gray-900">{{ $post->title }}</div>
+                                    <div class="text-sm text-gray-900">{{ $itemPost->title }}</div>
                                 </td>
                                 <td class="px-6 py-4  text-sm text-gray-500">
-                                    <div class="text-sm text-gray-900">{{ $post->content }}</div>
+                                    <div class="text-sm text-gray-900">{{ $itemPost->content }}</div>
                                 </td>
-                                <td class="px-6 py-4  text-right text-sm font-medium">
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                <td class="px-6 py-4   text-sm font-medium">
+
+                                    {{-- @livewire('edit-post', ['post' => $post], key($post->id) ) --}}
+                                    <a class="bg-indigo-600 hover:bg-indigo-900 text-white p-2 cursor-pointer  rounded shadow-md m-6"
+                                        wire:click="edit({{ $itemPost }})">
+                                        <i class="fas fa-pencil-alt "></i>
+                                    </a>
+
                                 </td>
                             </tr>
                         @endforeach
@@ -100,4 +106,67 @@
         </x-table>
 
     </div>
+
+
+
+
+    <x-jet-dialog-modal wire:model="open">
+
+        <x-slot name="title">Editar</x-slot>
+
+        <x-slot name="content">
+
+            <div class="mb-4">
+                 @if ($photo)
+                    <img src="{{ $photo->temporaryUrl() }}">
+                @else
+                    <img src="{{ Storage::url($post->imagen) }}">
+                @endif
+ 
+
+                <div wire:loading wire:target="photo"
+                    class="w-full p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+                    role="alert">
+                    <span class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">Imagen
+                        cargando...</span>
+                    <span class="font-semibold mr-2 text-left flex-auto">espere por favor, hasta que se muestre la
+                        imagen</span>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <X-label value="Titulo del post" />
+                <x-jet-input type="text" class="w-full" wire:model="title" />
+            </div>
+
+
+            <div class="mb-4">
+                <X-label value="Contenido" />
+                <textarea rows="6" class="form-control w-full" wire:model="content"></textarea>
+
+            </div>
+
+
+            <div class="mb-4">
+                <x-jet-input type="file" class="w-full form-control" wire:model="photo" id="{{ $resetFoto }}" />
+                <x-jet-input-error for="photo" />
+            </div>
+
+        </x-slot>
+
+
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="$set('open',false)">Cancelar</x-jet-secondary-button>
+            <x-jet-danger-button wire:click="save" wire:target="save, photo" wire:loading.attr="disabled"
+                class="disabled:opacity-25">
+                <i class="fas fa-plus-circle mr-2"></i>view
+            </x-jet-danger-button>
+            <span wire:loading wire:target="save">
+                Procesando...
+            </span>
+        </x-slot>
+
+
+    </x-jet-dialog-modal>
+
 </div>

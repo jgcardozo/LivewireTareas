@@ -5,7 +5,7 @@
     </x-jet-danger-button>
 
 
-    <x-jet-dialog-modal wire:model="open">
+    <x-jet-dialog-modal wire:model="open" >
 
         <x-slot name="title">
             Nuevo Post
@@ -16,6 +16,7 @@
             <div class="mb-4">
                 @if ($photo)
                     <img src="{{ $photo->temporaryUrl() }}">
+           
                 @endif
                
            

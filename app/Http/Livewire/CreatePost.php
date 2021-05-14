@@ -7,12 +7,11 @@ use \App\Models\Post;
 use Livewire\WithFileUploads;
 
 
-
 class CreatePost extends Component
 {
     use WithFileUploads;
     
-    public $open = true;
+    public $open = false;
     public $title, $content, $photo, $resetFoto;
 
     public function mount()
@@ -58,6 +57,7 @@ class CreatePost extends Component
         $this->emit('alert', 'El post se creo correctamente');
         $this->emitTo('show-posts','render');
     } //save
+
 
 
     public function render()
